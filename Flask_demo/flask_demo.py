@@ -26,5 +26,9 @@ def three_color(color):
 def not_found():
     abort(404)
 
+@app.route(('/test'))
+def test():
+    pass
+
 if __name__ == '__main__':
     app.run()
