@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% from 'macros.html' import qux %}
 
-</body>
-</html>
+{% blcok content %}
+{% set name='bar' %}
+<h1>Template</h1>
+<ul>
+    <li><a href="{{ url_for('watchlist') }}">Watchlist</a> </li>
+    <li>Filter: {{ foo|musical }}</li>
+    <li>Global: {{ bar() }}</li>
+    <li>Test: {% if name is bar %}I am baz.{% endif %}</li>
+    <li>Macro: {{ qux(amout=5) }}</li>
+</ul>
+{% endblock %}
