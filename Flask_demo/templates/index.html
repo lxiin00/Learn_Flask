@@ -4,6 +4,14 @@
 {% block content %}
 {% set name='baz' %}
 <h1>Template</h1>
+{% block styles %}
+{{ super() }}
+<style>
+    .foo {
+        color: red;
+    }
+</style>
+{% endblock %}
 <ul>
     <li><a href="{{ url_for('watchlist') }}">Watchlist</a> </li>
     <li>Filter: {{ foo|musical }}</li>

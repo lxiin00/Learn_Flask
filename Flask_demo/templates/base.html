@@ -4,7 +4,10 @@
     {% block head %}
         <meta charset="UTF-8">
         <title>{% block title %}Template - HelloFlask{% endblock %}</title>
-        {% block styles %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='firewood.ico' )}}">
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        {% endblock %}
     {% endblock %}
 </head>
 <body>
@@ -15,9 +18,10 @@
     {% block content %}{% endblock %}
 </main>
 <footer>
-    {% block footer %}
+    {% block footer -%}
+    <img src="{{ url_for('static', filename='firewood.png') }}" width="50">
     &copy; Lxiin00
-    {% endblock %}
+    {%- endblock %}
 </footer>
 {% block scripts %}{% endblock %}
 </body>

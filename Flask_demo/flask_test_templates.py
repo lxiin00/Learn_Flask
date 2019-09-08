@@ -2,6 +2,10 @@ from flask import Flask, render_template, Markup
 
 app = Flask(__name__)
 
+# 去掉渲染html显示的空行，效果和定界符内侧添加减号效果一样（这样并不影响实际效果，可有可无的操作）
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
+
 user = {
     'username': 'Grey Li',
     'bio': 'A boy who loves movies and music.'
