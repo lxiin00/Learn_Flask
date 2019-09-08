@@ -1,7 +1,8 @@
-from flask import Flask, render_template, Markup
+from flask import Flask, render_template, Markup, flash, redirect, url_for
 
 app = Flask(__name__)
 
+app.secret_key = 'sercet string'
 # 去掉渲染html显示的空行，效果和定界符内侧添加减号效果一样（这样并不影响实际效果，可有可无的操作）
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
@@ -31,7 +32,7 @@ def index():
 
 @app.route('/watchlist')
 def watchlist():
-    return render_template('watchlist.html', user=user, movies=movies)
+    return render_template('watchlist_with_static.html', user=user, movies=movies)
 
 #注册模板上下文的处理函数
 @app.context_processor
@@ -63,6 +64,19 @@ def baz(n):
         return True
     return False
 # app.jinja_env.tests['baz'] = baz
+
+@app.route('/flash')
+def just_flash():
+    flash('I am flash, who is looking for me?')
+    return redirect(url_for('index'))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_wrong():
+    return render_template('errors/500.html'), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

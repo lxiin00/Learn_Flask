@@ -15,12 +15,15 @@
     <ul><li><a href="{{ url_for('index') }}">Home</a> </li></ul>
 </nav>
 <main>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
     {% block content %}{% endblock %}
 </main>
 <footer>
     {% block footer -%}
     <img src="{{ url_for('static', filename='firewood.png') }}" width="50">
-    &copy; Lxiin00
+    <small>&copy; 2019 <a href="https://github.com/lxiin00">Lxiin00's Github</a></small>
     {%- endblock %}
 </footer>
 {% block scripts %}{% endblock %}
