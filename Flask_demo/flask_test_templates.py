@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Markup
 
 app = Flask(__name__)
 
@@ -28,6 +28,37 @@ def index():
 @app.route('/watchlist')
 def watchlist():
     return render_template('watchlist.html', user=user, movies=movies)
+
+#注册模板上下文的处理函数
+@app.context_processor
+def inject_foo():
+    foo = 'I am foo.'
+    return dict(foo=foo) # 等同于 return '{'foo': foo}
+# app.context_processor(lambda: dict(foo='I am foo.')) 等同于@app.context_processor
+
+# 自定义过滤器--> {{ name|musical }}
+@app.template_filter()
+def musical(s):
+    return s + Markup(' &#9835;')
+
+# 将函数注册为模板全局函数
+@app.template_global()
+def bar():
+    return 'I am bar.'
+
+# 这样定义，可以在模板里面直接使用{{ text }}
+@app.route('/hello')
+def hello():
+    text = Markup('<h1>Hello, Flask!</h1>')
+    return render_template('index.html', text=text)
+
+# 自定义测试器，函数名需要对应上
+@app.template_test()
+def baz(n):
+    if n == 'baz':
+        return True
+    return False
+# app.jinja_env.tests['baz'] = baz
 
 if __name__ == '__main__':
     app.run(debug=True)
