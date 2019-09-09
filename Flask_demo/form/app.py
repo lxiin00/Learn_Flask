@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 from forms import LoginForm
+from flask_wtf import FlaskForm
 
 app = Flask(__name__)
 
