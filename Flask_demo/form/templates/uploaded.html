@@ -4,7 +4,9 @@
 
 {% if session.filenames %}
 {% for filename in session.filenames %}
-<img src="{{ url_for('get_file', filename=filename) }}">
+<a href="{{ url_for('get_file', filename=filename) }}" target="_blank">
+    <img src="{{ url_for('get_file', filename=filename) }}">
+</a>
 
 {% endfor %}
 {% endif %}

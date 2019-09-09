@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, url_for, flash, redirect, session, send_from_directory
-from forms import LoginForm, UploadForm
+from forms import LoginForm, UploadForm, MultiUploadForm
 from flask_wtf import FlaskForm
+from flask_wtf.csrf import validate_csrf
+from wtforms import ValidationError
 import os
 import uuid
 
@@ -10,6 +12,7 @@ app.secret_key = 'secret string'
 
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024# 设置上传文件的最大值（单位为字节byte）
 app.config['UPLOAD_PATH'] = os.path.join(app.root_path, 'uploads')
+app.config['ALLOWED_EXTENSIONS'] = ['png', 'jpg', 'jpeg', 'gif']
 
 @app.route('/index')
 def index():
@@ -47,6 +50,7 @@ def show_images():
 def too_large(e):
     return render_template('errors/413.html'), 413
 
+# 上传单份文件
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
     form = UploadForm()
@@ -56,6 +60,38 @@ def upload_file():
         f.save(os.path.join(app.config['UPLOAD_PATH'], filename))
         flash('上传成功！')
         session['filenames'] = [filename]
+        return redirect(url_for('show_images'))
+    return render_template('upload_file.html', form=form)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+# 上传多份文件
+@app.route('/multi-upload', methods=['GET', 'POST'])
+def multi_upload():
+    form = MultiUploadForm()
+    if request.method == 'POST':
+        filenames = []
+        try:
+            validate_csrf(form.csrf_token.data)
+        except ValidationError:
+            flash('CSRF token 错误！')
+            return redirect(url_for('multi_upload'))
+
+        if 'photo' not in request.files:
+            flash('文件不存在！')
+            return redirect(url_for('multi_upload'))
+
+        for f in request.files.getlist('photo'):
+            if f and allowed_file(f.filename):
+                filename = random_filename(f.filename)
+                f.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+                filenames.append(filename)
+            else:
+                flash('文件无效！')
+                return redirect(url_for('multi_upload'))
+        flash('上传成功！')
+        session['filenames'] = filenames
         return redirect(url_for('show_images'))
     return render_template('upload_file.html', form=form)
 
