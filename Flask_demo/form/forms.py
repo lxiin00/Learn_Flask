@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, MultipleFileField
 from wtforms.validators import DataRequired, Length, ValidationError
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_ckeditor import CKEditorField
 
 
 class LoginForm(FlaskForm):
@@ -50,4 +51,10 @@ class UploadForm(FlaskForm):
 # 上传多文件
 class MultiUploadForm(FlaskForm):
     photo = MultipleFileField('上传图片', validators=[DataRequired()])
-    submit = SubmitField()
+    submit = SubmitField('提交')
+
+# 富文本编辑器
+class RichTextForm(FlaskForm):
+    title = StringField('标题', validators=[DataRequired(), Length(1, 50)])
+    body = CKEditorField('内容', validators=[DataRequired()])
+    submit = SubmitField('提交')
