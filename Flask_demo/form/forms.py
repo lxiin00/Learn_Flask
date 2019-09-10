@@ -58,3 +58,30 @@ class RichTextForm(FlaskForm):
     title = StringField('标题', validators=[DataRequired(), Length(1, 50)])
     body = CKEditorField('内容', validators=[DataRequired()])
     submit = SubmitField('提交')
+
+class NewPostForm(FlaskForm):
+    title = StringField('标题', validators=[DataRequired(), Length(1, 60)])
+    body = CKEditorField('内容', validators=[DataRequired()])
+    save = SubmitField('保存')
+    publish = SubmitField('发布')
+
+class SigninForm(FlaskForm):
+    username = StringField('用户名', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('密码', validators=[DataRequired(), Length(6, 64)])
+    submit1 = SubmitField('登录')
+
+class RegisterForm(FlaskForm):
+    username = StringField('用户名', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('密码', validators=[DataRequired(), Length(6, 64)])
+    submit2 = SubmitField('注册')
+
+class SigninForm2(FlaskForm):
+    username = StringField('用户明', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('密码', validators=[DataRequired(), Length(1, 64)])
+    submit = SubmitField('登录')
+
+class RegisterForm2(FlaskForm):
+    username = StringField('用户名', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('密码', validators=[DataRequired(), Length(1, 64)])
+    submit = SubmitField('注册')
+
