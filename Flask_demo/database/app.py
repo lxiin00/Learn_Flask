@@ -35,6 +35,13 @@ class NewNoteForm(FlaskForm):
 class DeleteNoteForm(FlaskForm):
     submit = SubmitField('删除')
 
+class EditNoteForm(FlaskForm):
+    body = TextAreaField('内容', validators=[DataRequired()])
+    submit = SubmitField('更新')
+
+# class EditNoteForm(NewNoteForm):
+#     submit = SubmitField('更新')
+
 @app.route('/new', methods=['GET', 'POST'])
 def new_note():
     form = NewNoteForm()
@@ -52,6 +59,18 @@ def index():
     form = DeleteNoteForm()
     notes = Note.query.all()
     return render_template('index.html', notes=notes, form=form)
+
+@app.route('/edit/<int:note_id>', methods=['GET', 'POST'])
+def edit_note(note_id):
+    form = EditNoteForm()
+    note = Note.querry.get(note_id)
+    if form.validate_on_submit():
+        note.body = form.body.data
+        db.session.commit()
+        flash('你的内容已经更新！')
+        return redirect(url_for('index'))
+    form.body.data = note.body
+    return render_template('edit_note.html', form=form)
 
 
 if __name__ == '__main__':
