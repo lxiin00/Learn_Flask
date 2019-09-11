@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>NoteBook</h1>
+
+<h4>{{ notes|length }} notes:</h4>
+{% for note in notes %}
+    <div class="note">
+        <p>{{ note.body }}</p>
+    </div>
+{% endfor %}
+
+{{ form.csrf_token }}
+{{ form.submit }}<br>
+
+<a href="{{ url_for('new_note') }}">New Note</a>
+
+{% endblock %}
