@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        {% block metas %}
+            <meta charset="UTF-8">
+        {% endblock metas %}
+
+        <title>{% block title %}Form - HelloFlask{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='firewood.ico') }}">
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+<nav>
+    {% block nav %}
+        <ul>
+            <li><a href="{{ url_for('index') }}">首页</a></li>
+        </ul>
+    {% endblock %}
+</nav>
+<main>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    {% block footer %}
+    <img src="{{ url_for('static', filename='firewood.png') }}" width="50">
+    <small>&copy; 2019 <a href="https://github.com/lxiin00">Lxiin00's Github</a></small>
+    {% endblock %}
+</footer>
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
