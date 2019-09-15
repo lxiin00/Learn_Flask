@@ -16,11 +16,11 @@ app.config.update(
     MAIL_PORT = 465,
     MAIL_USE_SSL = True,
     # MAIL_USERNAME = os.getenv('MAIL_USERNAME'),
-    MAIL_USERNAME = 'shaolxiin2@163.com',
+    MAIL_USERNAME = 'xxx',
     # MAIL_PASSWORD = os.getenv('MAIL_PASSWORD'),
-    MAIL_PASSWORD = 'as15626491174',
+    MAIL_PASSWORD = 'xxx',
     # MAIL_DEFAULT_SENDER = ('Lxiin00', os.getenv('MAIL_USERNAME'))
-    MAIL_DEFAULT_SENDER = ('Lxiin00', 'shaolxiin2@163.com')
+    MAIL_DEFAULT_SENDER = ('Lxiin00', 'xxx')
 )
 
 mail = Mail(app)
