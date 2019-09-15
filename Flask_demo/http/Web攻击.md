@@ -37,3 +37,4 @@ SELECT * FROM students WHERE password='' or 1=1 --;'
 3)、参数化查询，在构造SQL语句时避免使用拼接字符串或字符串格式化的方式来构建SQL语句。
 
 4)、转移特殊字符，比如引号、分号和横线等。
+
