@@ -1,0 +1,4 @@
+您好 {{ name }},
+感谢您对Flask的订阅！
+请享受您的订阅 :)
+点击这里链接取消订阅：{{ url_for('unsubscribe', _external=True) }}

@@ -1,0 +1,8 @@
+<div style="width: 580px; padding: 20px;">
+    <h3>您好 {{ name }},</h3>
+    <p>感谢您对Flask的订阅！</p>
+    <p>请享受您的订阅 :)</p>
+    <small style="color: #868e96;">
+        点击这里<a href="{{ url_for('unsubscribe', _external=True) }}">取消订阅</a>.
+    </small>
+</div>
